@@ -1,6 +1,7 @@
 import { Container, Point } from "pixi.js";
+import { IScene } from "./Interfaces/IScene";
 
-export class PhysicsContainer extends Container{
+export class PhysicsContainer extends Container implements IScene{
     protected speed = new Point();
     protected accelerate = new Point();
 
