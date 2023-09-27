@@ -6,6 +6,8 @@ import { Player2 } from "../game/Player2";
 import { Player1 } from "../game/Player1";
 import { checkCollision } from "../Interfaces/IHitBox";
 import { Objective } from "../game/Objetive";
+import { Button } from "../ui/Button";
+import { PauseScene } from "./PauseScene";
 
 
 export class GameScene extends Container implements IScene{
@@ -15,7 +17,11 @@ export class GameScene extends Container implements IScene{
     private floor : Platform;
     private pause: Boolean;
     private objective : Objective;
-    private textWinner : Text;
+    private btnPause : Button;
+    private scenePause: PauseScene;
+
+    private score1 = new Text(0);
+    private score2 = new Text(0);
     
     constructor(){
         super();
@@ -38,7 +44,16 @@ export class GameScene extends Container implements IScene{
         this.objective.position.set(Manager.WIDTH/2,Manager.HEIGHT/2);
         this.addChild(this.objective);
 
-        this.textWinner = new Text();
+        
+
+        this.btnPause = new Button(Texture.from('pause'),Texture.from('pauseDown'),this.onClickPause.bind(this));
+        this.btnPause.scale.set(0.2);
+        this.btnPause.position.set(Manager.WIDTH-this.btnPause.width-10,10);
+        this.addChild(this.btnPause);
+
+        this.addChild(this.score1);
+
+        this.scenePause = new PauseScene();
         this.pause = false;
     }
 
@@ -68,17 +83,30 @@ export class GameScene extends Container implements IScene{
             // Chequear colision con el objetivo
             overlap=checkCollision(this.player1,this.objective);
             if(overlap!=null){
-                this.textWinner.text='Player 1 WINS';
-                this.addChild(this.textWinner);
+                this.cambiarObjetivo();
+                this.sumarPunto(this.score1);
             }
             else{
                 overlap=checkCollision(this.player2,this.objective);
                 if(overlap!=null){
-                    this.textWinner.text='Player 2 WINS';
-                    this.addChild(this.textWinner);
+                    this.sumarPunto(this.score2);
                 }
             }
         }
+    }
+
+    private cambiarObjetivo(){
+        this.objective.position.set(Math.random()*(Manager.WIDTH-this.objective.width),Manager.HEIGHT/2);
+    }
+    private sumarPunto(score : Text) {
+        score.text=Number(score.text)+1;
+    }
+
+    private onClickPause(){
+        this.pause=true;
+        this.scenePause = new PauseScene();
+        this.scenePause.position.set((Manager.WIDTH-this.scenePause.width)/2,(Manager.HEIGHT-this.scenePause.height)/2)
+        this.addChild(this.scenePause);
     }
 
     private limitScreen(){

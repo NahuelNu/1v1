@@ -12,6 +12,8 @@ export const manifest: AssetsManifest = {
             name: "UI",
             assets:{
                 'bgBlue':"./kenney_UI-pack/PNG/blue_panel.png",
+                'pause' : './UI/Icons/Icon_Small_Blank_Pause.png', 
+                'pauseDown' : './UI/Icons/Icon_Small_WhiteOutline_Pause.png', 
             }
         },
         {
