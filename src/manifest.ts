@@ -19,9 +19,9 @@ export const manifest: AssetsManifest = {
         {
             name: 'platforms',
             assets:{
-                'plat1' : './kenney_pixel-platformer/Tiles/tile_0000.png',
-                'plat2' : './kenney_pixel-platformer/Tiles/tile_0001.png',
-                'plat3' : './kenney_pixel-platformer/Tiles/tile_0002.png',
+                'plat1' : './kenney_pixel-platformer/Tiles/tile_0001.png',
+                'plat2' : './kenney_pixel-platformer/Tiles/tile_0002.png',
+                'plat3' : './kenney_pixel-platformer/Tiles/tile_0003.png',
             }
         },
         {

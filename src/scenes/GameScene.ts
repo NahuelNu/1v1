@@ -12,12 +12,12 @@ import { PauseScene } from "./PauseScene";
 
 export class GameScene extends Container implements IScene{
 
-    private player1 : Player1;
-    private player2 : Player2;
-    private floor : Platform;
+    private player1!: Player1;
+    private player2! : Player2;
+    private floor! : Platform;
     private pause: Boolean;
-    private objective : Objective;
-    private btnPause : Button;
+    private objective!: Objective;
+    private btnPause!: Button;
     private scenePause: PauseScene;
 
     private score1 = new Text(0);
@@ -26,10 +26,41 @@ export class GameScene extends Container implements IScene{
     constructor(){
         super();
 
-        this.floor=new Platform(Texture.from('plat3'),Manager.WIDTH);
-        this.floor.position.set(0,Manager.HEIGHT-this.floor.height);
-        this.addChild(this.floor);
+        this.crearPiso();
+        this.crearPlayers();
+        this.crearObjective();
+        this.crearScores();
+        this.crearBtnPause();
+        
+        // this.crearPlatform();
 
+
+        this.scenePause = new PauseScene();
+        this.pause = false;
+    }
+    // private crearPlatform() {
+    //     let platform = new Platform()
+    // }
+
+    private crearBtnPause() {
+        this.btnPause = new Button(Texture.from('pause'),Texture.from('pauseDown'),this.onClickPause.bind(this));
+        this.btnPause.scale.set(0.2);
+        this.btnPause.position.set(Manager.WIDTH-this.btnPause.width-10,10);
+        this.addChild(this.btnPause);
+    }
+    private crearScores() {
+        this.score1.position.set(0,0);
+        this.score2.position.set(0,this.score1.height)
+        this.addChild(this.score1);
+        this.addChild(this.score2);
+    }
+    private crearObjective() {
+        const texturesObjective=[Texture.from('coin1'),Texture.from('coin1.1')];
+        this.objective= new Objective(texturesObjective);
+        this.objective.position.set(Manager.WIDTH/2,Manager.HEIGHT/2);
+        this.addChild(this.objective);
+    }
+    private crearPlayers() {
         const texturesPlayer1= [Texture.from('alien1'),Texture.from('alien1.1')]
         const texturesPlayer2=[Texture.from('alien2'),Texture.from('alien2.1')]
         this.player1= new Player1(texturesPlayer1);
@@ -38,25 +69,12 @@ export class GameScene extends Container implements IScene{
         this.player2.position.set(Manager.WIDTH-this.player2.width,Manager.HEIGHT-this.floor.height-this.player2.height);
         this.addChild(this.player1);
         this.addChild(this.player2);
-
-        const texturesObjective=[Texture.from('coin1'),Texture.from('coin1.1')];
-        this.objective= new Objective(texturesObjective);
-        this.objective.position.set(Manager.WIDTH/2,Manager.HEIGHT/2);
-        this.addChild(this.objective);
-
-        
-
-        this.btnPause = new Button(Texture.from('pause'),Texture.from('pauseDown'),this.onClickPause.bind(this));
-        this.btnPause.scale.set(0.2);
-        this.btnPause.position.set(Manager.WIDTH-this.btnPause.width-10,10);
-        this.addChild(this.btnPause);
-
-        this.addChild(this.score1);
-
-        this.scenePause = new PauseScene();
-        this.pause = false;
     }
-
+    private crearPiso(){
+        this.floor=new Platform(Texture.from('plat2'),Texture.from('plat2'),Texture.from('plat2'),Manager.WIDTH);
+        this.floor.position.set(0,Manager.HEIGHT-this.floor.height);
+        this.addChild(this.floor);
+    }
     
     update(deltaFrame: number, deltaTime: number): void {
         if(!this.pause){
@@ -89,6 +107,7 @@ export class GameScene extends Container implements IScene{
             else{
                 overlap=checkCollision(this.player2,this.objective);
                 if(overlap!=null){
+                    this.cambiarObjetivo();
                     this.sumarPunto(this.score2);
                 }
             }
