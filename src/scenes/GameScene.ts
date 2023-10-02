@@ -19,6 +19,7 @@ export class GameScene extends Container implements IScene{
     private objective!: Objective;
     private btnPause!: Button;
     private scenePause: PauseScene;
+    private platforms : Platform[];
 
     private score1 = new Text(0);
     private score2 = new Text(0);
@@ -32,15 +33,23 @@ export class GameScene extends Container implements IScene{
         this.crearScores();
         this.crearBtnPause();
         
-        // this.crearPlatform();
+        this.platforms= [];
+        this.crearPlatform();
 
 
         this.scenePause = new PauseScene();
         this.pause = false;
     }
-    // private crearPlatform() {
-    //     let platform = new Platform()
-    // }
+
+    private crearPlatform() {
+        for (let index = 1; index < 5; index++) {
+            let platform = new Platform(Texture.from('plat1'),Texture.from('plat2'),Texture.from('plat3'),Math.random()*(Manager.WIDTH-18*3)+18*3)
+            platform.position.set(Math.random()*(Manager.WIDTH-platform.width),Manager.HEIGHT*index/5);
+            this.addChild(platform);
+            this.platforms.push(platform);
+        }
+        
+    }
 
     private crearBtnPause() {
         this.btnPause = new Button(Texture.from('pause'),Texture.from('pauseDown'),this.onClickPause.bind(this));
@@ -84,6 +93,7 @@ export class GameScene extends Container implements IScene{
             //Optimizar todo este código con bucles quizás 
             this.limitScreen();
 
+
             let overlap=checkCollision(this.player1,this.floor);
             if(overlap!=null){
                 this.player1.separate(overlap,this.floor);
@@ -97,6 +107,9 @@ export class GameScene extends Container implements IScene{
                 this.player1.separatePlayer(this.player2,overlap);
                 this.player2.separatePlayer(this.player1,overlap);
             }
+
+            //Chequear colision con plataformas
+            this.checkCollisionWithPlatforms();
             
             // Chequear colision con el objetivo
             overlap=checkCollision(this.player1,this.objective);
@@ -112,6 +125,19 @@ export class GameScene extends Container implements IScene{
                 }
             }
         }
+    }
+    private checkCollisionWithPlatforms() {
+        let overlap;
+        this.platforms.forEach( e => {
+            overlap=checkCollision(this.player1,e);
+            if(overlap!=null){
+                this.player1.separate(overlap,e);
+            }
+            overlap = checkCollision(this.player2,e);
+            if(overlap!=null){
+                this.player2.separate(overlap,e);
+            }
+        });
     }
 
     private cambiarObjetivo(){
