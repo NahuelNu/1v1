@@ -141,8 +141,9 @@ export class GameScene extends Container implements IScene{
     }
 
     private cambiarObjetivo(){
-        this.objective.position.set(Math.random()*(Manager.WIDTH-this.objective.width),Manager.HEIGHT/2);
+        this.objective.position.set(Math.random()*(Manager.WIDTH-this.objective.width),Manager.HEIGHT/5*Math.round(Math.random()*((4-1) +1)) +Manager.HEIGHT/10);
     }
+    
     private sumarPunto(score : Text) {
         score.text=Number(score.text)+1;
     }
@@ -159,10 +160,18 @@ export class GameScene extends Container implements IScene{
             this.player1.x=0;
         else if(this.player1.x>Manager.WIDTH-this.player1.width)
             this.player1.x=Manager.WIDTH-this.player1.width;
+        if(this.player1.y<0){
+            this.player1.y=0
+            this.player1.speedY=0;
+        }
 
         if(this.player2.x<0)
             this.player2.x=0;
         else if(this.player2.x>Manager.WIDTH-this.player2.width)
             this.player2.x=Manager.WIDTH-this.player2.width;
+        if(this.player2.y<0){
+            this.player2.y=0
+            this.player2.speedY=0;
+        }
     }
 }
