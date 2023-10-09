@@ -3,12 +3,6 @@ import { AssetsManifest } from "pixi.js";
 export const manifest: AssetsManifest = {
   bundles: [
     {
-      name: "cars",
-      assets: {
-        blackCar: "./kenney_racing-pack/PNG/Cars/car_black_5.png",
-      },
-    },
-    {
       name: "UI",
       assets: {
         pause: "./UI/Icons/Icon_Small_Blank_Pause.png",
@@ -18,11 +12,10 @@ export const manifest: AssetsManifest = {
     {
       name: "UI-menu",
       assets: {
-        menuBg:
-          "./Prinbles_GUI_Asset_Solid (1.0.0)/asset/png/Panel/Window/Medium.png",
         play: "./Prinbles_GUI_Asset_Solid (1.0.0)/asset/png/Buttons/Rect-Medium/PlayText/Default.png",
         playDown:
           "./Prinbles_GUI_Asset_Solid (1.0.0)/asset/png/Buttons/Rect-Medium/PlayText/Hover.png",
+        "1v1": "./1v1.png",
       },
     },
     {
@@ -34,6 +27,9 @@ export const manifest: AssetsManifest = {
           "./Prinbles_GUI_Asset_Solid (1.0.0)/asset/png/Buttons/Rect-Medium/PlayIcon/Default.png",
         playIconDown:
           "./Prinbles_GUI_Asset_Solid (1.0.0)/asset/png/Buttons/Rect-Medium/PlayIcon/Hover.png",
+        home: "./Prinbles_GUI_Asset_Solid (1.0.0)/asset/png/Buttons/Square-Medium/Home/Default.png",
+        repeat:
+          "./Prinbles_GUI_Asset_Solid (1.0.0)/asset/png/Buttons/Square-Medium/Repeat/Default.png",
       },
     },
     {

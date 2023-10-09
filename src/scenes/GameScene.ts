@@ -174,6 +174,7 @@ export class GameScene extends Container implements IScene {
   private onClickPause() {
     this.pause = true;
     this.objective.stop();
+    this.btnPause.eventMode = "none";
 
     this.scenePause = new PauseScene();
     this.scenePause.position.set(
@@ -187,6 +188,7 @@ export class GameScene extends Container implements IScene {
     this.pause = false;
     this.objective.play();
     this.scenePause.destroy();
+    this.btnPause.eventMode = "static";
   }
 
   private limitScreen() {
