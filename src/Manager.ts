@@ -1,12 +1,14 @@
 import { Application, Ticker } from "pixi.js";
 import { IScene } from "./Interfaces/IScene";
 import { Keyboard } from "./utils/Keyboard";
+// import { Sound, sound } from "@pixi/sound";
 
 export namespace Manager {
   export const WIDTH = 648;
   export const HEIGHT = 480;
   let currentScene: IScene;
   let app: Application;
+  // let music: Sound;
 
   export function initialize() {
     if (app == undefined) {

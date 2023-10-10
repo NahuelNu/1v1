@@ -28,4 +28,10 @@ export class Button extends Container {
   private onMouseDown() {
     this.spr.texture = this.down;
   }
+
+  public changeTextures(def: Texture, down: Texture) {
+    this.def = def;
+    this.down = down;
+    this.spr.texture = this.def;
+  }
 }
