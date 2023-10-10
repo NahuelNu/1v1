@@ -9,6 +9,7 @@ import { Objective } from "../game/Objetive";
 import { Button } from "../ui/Button";
 import { PauseScene } from "./PauseScene";
 import { sound } from "@pixi/sound";
+import { WinScene } from "./WinScene";
 
 export class GameScene extends Container implements IScene {
   private player1!: Player1;
@@ -23,6 +24,7 @@ export class GameScene extends Container implements IScene {
 
   private score1 = new Text(0);
   private score2 = new Text(0);
+  private scoreObjetivo = 15;
 
   constructor() {
     super();
@@ -186,7 +188,17 @@ export class GameScene extends Container implements IScene {
           this.sumarPunto(this.score2);
         }
       }
+
+      if (Number(this.score1.text) >= this.scoreObjetivo) {
+        this.showWinner(1);
+      } else if (Number(this.score2.text) >= this.scoreObjetivo) {
+        this.showWinner(2);
+      }
     }
+  }
+  private showWinner(winner: number) {
+    sound.stop("gameMusic1");
+    Manager.changeScene(new WinScene(winner, this.background));
   }
 
   private checkCollisionWithPlatforms() {
