@@ -62,7 +62,7 @@ export class GameScene extends Container implements IScene {
       let tamanio;
       do {
         tamanio = Math.random() * (Manager.WIDTH - 18 * 3) + 18 * 3;
-      } while (tamanio >= Manager.WIDTH - 60);
+      } while (Math.ceil(tamanio / 18) * 18 >= Manager.WIDTH - 60);
 
       let platform = new Platform(
         Texture.from("kenney_pixel-platformer/Tiles/tile_0001.png"),
@@ -75,6 +75,7 @@ export class GameScene extends Container implements IScene {
       do {
         posX = Math.random() * (Manager.WIDTH - platform.width);
       } while (posX < 30 || posX + platform.width > Manager.WIDTH - 30);
+
       platform.position.set(posX, (Manager.HEIGHT * index) / 5);
       this.addChild(platform);
       this.platforms.push(platform);
